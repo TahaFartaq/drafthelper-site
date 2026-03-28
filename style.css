@@ -86,6 +86,10 @@ body.dark  .small { color: #444; }
 body.light .small { color: #aaa; }
 
 .divider { border-top: 1px solid; margin: 4px 0; }
+
+.tip { font-size: 11px; margin-top: 6px; padding: 6px 10px; border-left: 3px solid; border-radius: 3px; }
+body.dark  .tip { color: #aaa; background: #1a1a1a; border-color: #58a6ff; }
+body.light .tip { color: #444; background: #eef4ff; border-color: #133c8a; }
 body.dark  .divider { border-color: #222; }
 body.light .divider { border-color: #ddd; }
 
