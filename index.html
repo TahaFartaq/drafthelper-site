@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DraftHelper</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="dark">
+
+  <div class="page">
+
+    <div class="top">
+      <span class="logo">⚡ DraftHelper</span>
+      <button onclick="toggleTheme()" id="theme-toggle">☀ Light</button>
+    </div>
+
+    <div class="content">
+
+      <div class="left">
+        <div class="version">v1.0 Beta &nbsp;·&nbsp; Windows &nbsp;·&nbsp; Free</div>
+        <h1>DraftHelper</h1>
+        <p>Real-time AI overlay for League of Legends.<br>Optimal picks, summoner spells and game plan — automatically.</p>
+        <a href="#" class="btn">⬇ Download DraftHelper.exe</a>
+        <div class="small">No installation required &nbsp;·&nbsp; Windows 10/11</div>
+
+        <div class="divider"></div>
+
+        <div class="install-title">Installation</div>
+        <ol>
+          <li>Run <code>DraftHelper.exe</code></li>
+          <li>Windows warning → <strong>More info</strong> → <strong>Run anyway</strong></li>
+          <li>Launch LoL — overlay starts automatically in champion select</li>
+        </ol>
+
+        <div class="divider"></div>
+
+        <div class="contact">
+          <a href="mailto:tfartaq16@gmail.com">tfartaq16@gmail.com</a>
+          &nbsp;·&nbsp; Discord : <strong>DezzaX</strong>
+        </div>
+      </div>
+
+      <div class="right">
+        <img id="main-screen" src="screenshots/screen-demo-ready.png" alt="DraftHelper" />
+        <div class="thumbs">
+          <img src="screenshots/screen-demo-minimized.png" class="thumb" onclick="setScreen(this)" alt="Minimized" />
+          <img src="screenshots/screen-demo-analyzing.png" class="thumb" onclick="setScreen(this)" alt="Analyzing" />
+          <img src="screenshots/screen-demo-ready.png" class="thumb active" onclick="setScreen(this)" alt="Ready" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">⚡ DraftHelper v1.0 Beta &nbsp;·&nbsp; Made by DezzaX &nbsp;·&nbsp; Not affiliated with Riot Games</div>
+
+  </div>
+
+  <script>
+    function setScreen(el) {
+      document.getElementById('main-screen').src = el.src;
+      document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+    function toggleTheme() {
+      const b = document.body;
+      const btn = document.getElementById('theme-toggle');
+      if (b.classList.contains('dark')) {
+        b.classList.replace('dark', 'light');
+        btn.textContent = '🌙 Dark';
+      } else {
+        b.classList.replace('light', 'dark');
+        btn.textContent = '☀ Light';
+      }
+    }
+  </script>
+
+</body>
+</html>
