@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DraftHelper — Changelog</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .cl-page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 60px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .cl-content { flex: 1; padding: 40px 0; }
+    .cl-back { font-size: 12px; text-decoration: none; margin-bottom: 24px; display: inline-block; }
+    body.dark  .cl-back { color: #58a6ff; }
+    body.light .cl-back { color: #133c8a; }
+    .cl-title { font-size: 32px; font-weight: bold; margin-bottom: 32px; }
+    .cl-entry { margin-bottom: 32px; border-left: 3px solid; padding-left: 16px; }
+    body.dark  .cl-entry { border-color: #58a6ff; }
+    body.light .cl-entry { border-color: #133c8a; }
+    .cl-version { font-size: 15px; font-weight: bold; }
+    body.dark  .cl-version { color: #58a6ff; }
+    body.light .cl-version { color: #133c8a; }
+    .cl-date { font-size: 11px; margin-bottom: 10px; margin-top: 2px; }
+    body.dark  .cl-date { color: #555; }
+    body.light .cl-date { color: #999; }
+    .cl-list { list-style: none; padding: 0; }
+    .cl-list li { font-size: 13px; padding: 3px 0; line-height: 1.6; }
+    .cl-list li::before { content: "— "; }
+    body.dark  .cl-list { color: #aaa; }
+    body.light .cl-list { color: #555; }
+    .tag { font-size: 10px; padding: 1px 6px; border-radius: 3px; margin-right: 6px; font-weight: bold; vertical-align: middle; }
+    .tag-fix  { background: #3a1a1a; color: #f85149; }
+    .tag-add  { background: #1a3a1a; color: #3fb950; }
+    .tag-impr { background: #1a2a3a; color: #58a6ff; }
+    body.light .tag-fix  { background: #fde8e8; color: #c00; }
+    body.light .tag-add  { background: #e8f5e8; color: #1a7a1a; }
+    body.light .tag-impr { background: #e8f0ff; color: #133c8a; }
+  </style>
+</head>
+<body class="dark">
+
+  <div class="cl-page">
+
+    <div class="top">
+      <span class="logo">⚡ DraftHelper</span>
+      <button onclick="toggleTheme()" id="theme-toggle">☀ Light</button>
+    </div>
+
+    <div class="cl-content">
+      <a href="index.html" class="cl-back">← Back</a>
+      <div class="cl-title">Changelog</div>
+
+      <div class="cl-entry">
+        <div class="cl-version">v1.1 Beta</div>
+        <div class="cl-date">2026-03-29</div>
+        <ul class="cl-list">
+          <li><span class="tag tag-add">ADD</span>Champion pool from mastery — AI now prioritizes your top 20 played champions</li>
+          <li><span class="tag tag-fix">FIX</span>Game plan now waits for all 10 picks before generating (no more incomplete comps)</li>
+          <li><span class="tag tag-fix">FIX</span>API calls run in background threads — no more outdated reco appearing after lock</li>
+          <li><span class="tag tag-add">ADD</span>Click-through mode — overlay is transparent to mouse input by default, click once to interact</li>
+          <li><span class="tag tag-add">ADD</span>Auto-reset when game ends — overlay returns to waiting state automatically</li>
+          <li><span class="tag tag-add">ADD</span>Reset button (↺) to manually clear the overlay</li>
+          <li><span class="tag tag-impr">IMPR</span>Debounce system — AI only called after 3s of stability, not on every single pick</li>
+          <li><span class="tag tag-impr">IMPR</span>Previous recommendation stays visible while a new one is being generated</li>
+          <li><span class="tag tag-fix">FIX</span>Game plan remains visible when the game launches</li>
+          <li><span class="tag tag-add">ADD</span>Windowed mode tip added to installation instructions on site</li>
+        </ul>
+      </div>
+
+      <div class="cl-entry">
+        <div class="cl-version">v1.0 Beta</div>
+        <div class="cl-date">2026-03-28</div>
+        <ul class="cl-list">
+          <li><span class="tag tag-add">ADD</span>Initial release</li>
+          <li><span class="tag tag-add">ADD</span>Real-time AI overlay using LCU API + xAI (grok-4-fast)</li>
+          <li><span class="tag tag-add">ADD</span>Optimal picks, summoner spells and game plan during champion select</li>
+          <li><span class="tag tag-add">ADD</span>Final game plan generated after player locks champion</li>
+          <li><span class="tag tag-add">ADD</span>12 languages support with dropdown selector</li>
+          <li><span class="tag tag-add">ADD</span>Draggable overlay, position saved between sessions</li>
+          <li><span class="tag tag-add">ADD</span>Collapsible overlay with dark UI</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer">⚡ DraftHelper &nbsp;·&nbsp; Made by DezzaX &nbsp;·&nbsp; Not affiliated with Riot Games</div>
+
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const b = document.body;
+      const btn = document.getElementById('theme-toggle');
+      if (b.classList.contains('dark')) {
+        b.classList.replace('dark', 'light');
+        btn.textContent = '🌙 Dark';
+      } else {
+        b.classList.replace('light', 'dark');
+        btn.textContent = '☀ Light';
+      }
+    }
+  </script>
+
+</body>
+</html>
