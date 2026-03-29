@@ -56,13 +56,23 @@
       <div class="cl-title">Changelog</div>
 
       <div class="cl-entry">
+        <div class="cl-version">v1.2 Beta</div>
+        <div class="cl-date">2026-03-29</div>
+        <ul class="cl-list">
+          <li><span class="tag tag-add">ADD</span>Overlay auto-hides at exactly 51s of game time — no more cursor conflict in-game</li>
+          <li><span class="tag tag-add">ADD</span>Countdown timer displayed based on live game clock (accurate regardless of loading time)</li>
+          <li><span class="tag tag-add">ADD</span>Overlay reappears automatically after the game ends, ready for next draft</li>
+          <li><span class="tag tag-fix">FIX</span>Removed click-through system — replaced by auto-hide for a simpler and more reliable experience</li>
+        </ul>
+      </div>
+
+      <div class="cl-entry">
         <div class="cl-version">v1.1 Beta</div>
         <div class="cl-date">2026-03-29</div>
         <ul class="cl-list">
           <li><span class="tag tag-add">ADD</span>Champion pool from mastery — AI now prioritizes your top 20 played champions</li>
           <li><span class="tag tag-fix">FIX</span>Game plan now waits for all 10 picks before generating (no more incomplete comps)</li>
           <li><span class="tag tag-fix">FIX</span>API calls run in background threads — no more outdated reco appearing after lock</li>
-          <li><span class="tag tag-add">ADD</span>Click-through mode — overlay is transparent to mouse input by default, click once to interact</li>
           <li><span class="tag tag-add">ADD</span>Auto-reset when game ends — overlay returns to waiting state automatically</li>
           <li><span class="tag tag-add">ADD</span>Reset button (↺) to manually clear the overlay</li>
           <li><span class="tag tag-impr">IMPR</span>Debounce system — AI only called after 3s of stability, not on every single pick</li>
