@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DraftHelper — My account</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .acc-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 60px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .acc-content { flex: 1; padding: 48px 0; display: flex; flex-direction: column; gap: 32px; }
+
+    /* Profile header */
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid;
+    }
+    body.dark  .profile-header { border-color: #222; }
+    body.light .profile-header { border-color: #ddd; }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .profile-info { display: flex; flex-direction: column; gap: 4px; }
+    .profile-email { font-size: 18px; font-weight: bold; }
+    .profile-meta { font-size: 12px; display: flex; gap: 12px; }
+    body.dark  .profile-meta { color: #555; }
+    body.light .profile-meta { color: #999; }
+
+    .plan-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .plan-free     { background: #21262d; color: #8b949e; }
+    .plan-premium  { background: #1f3a6e; color: #58a6ff; }
+    .plan-lifetime { background: #3a2a00; color: #f0b429; }
+
+    /* Cards */
+    .acc-card {
+      border-radius: 8px;
+      padding: 28px 32px;
+      border: 1px solid;
+    }
+    body.dark  .acc-card { background: #161b22; border-color: #30363d; }
+    body.light .acc-card { background: #fff;    border-color: #ddd; }
+
+    .acc-card-title {
+      font-size: 15px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    body.dark  .acc-card-title { color: #e6edf3; }
+    body.light .acc-card-title { color: #111; }
+
+    .acc-form { display: flex; flex-direction: column; gap: 14px; max-width: 420px; }
+
+    .acc-field { display: flex; flex-direction: column; gap: 5px; }
+    .acc-field label { font-size: 11px; font-weight: bold; }
+    body.dark  .acc-field label { color: #8b949e; }
+    body.light .acc-field label { color: #555; }
+
+    .acc-field input,
+    .acc-field select {
+      padding: 9px 13px;
+      border-radius: 6px;
+      border: 1px solid;
+      font-size: 13px;
+      outline: none;
+    }
+    body.dark  .acc-field input,
+    body.dark  .acc-field select { background: #21262d; border-color: #30363d; color: #e6edf3; }
+    body.light .acc-field input,
+    body.light .acc-field select { background: #f6f8fa; border-color: #ccc; color: #222; }
+    .acc-field input:focus,
+    .acc-field select:focus { border-color: #58a6ff; }
+
+    .acc-btn {
+      padding: 9px 22px;
+      font-size: 13px;
+      font-weight: bold;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      width: fit-content;
+    }
+    body.dark  .acc-btn { background: #1f6feb; color: #fff; }
+    body.light .acc-btn { background: #133c8a; color: #fff; }
+    .acc-btn:hover:not(:disabled) { opacity: 0.85; }
+    .acc-btn:disabled { opacity: 0.4; cursor: default; }
+
+    .acc-msg { font-size: 12px; min-height: 18px; }
+    .acc-success { color: #3fb950; }
+    .acc-error   { color: #f85149; }
+
+    .role-grid {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .role-btn {
+      padding: 8px 18px;
+      border-radius: 6px;
+      border: 1px solid;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    body.dark  .role-btn { background: #21262d; border-color: #30363d; color: #8b949e; }
+    body.light .role-btn { background: #f6f8fa; border-color: #ccc; color: #555; }
+    .role-btn.active {
+      border-color: #58a6ff;
+      color: #58a6ff;
+    }
+    body.dark  .role-btn.active { background: #1a2d4a; }
+    body.light .role-btn.active { background: #eef4ff; }
+
+    /* Not logged in */
+    .not-logged {
+      text-align: center;
+      padding: 80px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .not-logged p { font-size: 15px; }
+    body.dark  .not-logged p { color: #8b949e; }
+    body.light .not-logged p { color: #555; }
+  </style>
+</head>
+<body class="dark">
+
+  <div class="acc-page">
+
+    <div class="top">
+      <a href="index.html" class="logo" style="text-decoration:none;">⚡ DraftHelper</a>
+      <div class="top-right">
+        <a href="index.html" class="nav-link">Home</a>
+        <span id="header-user" class="nav-link" style="cursor:default;"></span>
+        <button onclick="logout()" id="btn-logout" class="nav-link" style="background:none;border:none;cursor:pointer;display:none;">Log out</button>
+        <button onclick="toggleTheme()" id="theme-toggle">☀ Light</button>
+      </div>
+    </div>
+
+    <div class="acc-content" id="acc-content">
+      <div class="not-logged" id="not-logged">
+        <p>You must be logged in to view your account.</p>
+        <button class="btn" onclick="document.getElementById('login-modal').style.display='flex'">Log in</button>
+      </div>
+    </div>
+
+    <div class="footer">⚡ DraftHelper v0.7 Beta &nbsp;·&nbsp; Made by DezzaX &nbsp;·&nbsp; Not affiliated with Riot Games</div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div id="login-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;align-items:center;justify-content:center;">
+    <div id="modal-box" style="border-radius:10px;padding:36px;width:360px;border:1px solid;">
+      <div style="font-size:16px;font-weight:bold;margin-bottom:20px;">Log in to DraftHelper</div>
+      <div class="acc-form">
+        <div class="acc-field">
+          <label>Email</label>
+          <input type="email" id="login-email" placeholder="you@example.com" />
+        </div>
+        <div class="acc-field">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()" />
+        </div>
+        <div id="login-msg" class="acc-msg"></div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <button class="acc-btn" onclick="doLogin()" id="login-submit-btn">Log in</button>
+          <button onclick="document.getElementById('login-modal').style.display='none'" style="background:none;border:none;cursor:pointer;font-size:12px;" id="modal-cancel-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const BACKEND = "http://204.168.233.120:8000";
+    const ROLES = ["top", "jungle", "mid", "adc", "support"];
+    const ROLE_COLORS = { top: "#f0b429", jungle: "#3fb950", mid: "#58a6ff", adc: "#f85149", support: "#bc8cff" };
+
+    function getToken() { return localStorage.getItem("dh_token"); }
+    function getEmail() { return localStorage.getItem("dh_email"); }
+
+    function logout() {
+      localStorage.removeItem("dh_token");
+      localStorage.removeItem("dh_email");
+      location.reload();
+    }
+
+    function toggleTheme() {
+      const b = document.body;
+      const btn = document.getElementById('theme-toggle');
+      if (b.classList.contains('dark')) {
+        b.classList.replace('dark', 'light');
+        btn.textContent = '🌙 Dark';
+        styleModal(false);
+      } else {
+        b.classList.replace('light', 'dark');
+        btn.textContent = '☀ Light';
+        styleModal(true);
+      }
+    }
+
+    function styleModal(dark) {
+      const box = document.getElementById('modal-box');
+      if (dark) {
+        box.style.background = '#161b22';
+        box.style.borderColor = '#30363d';
+        box.style.color = '#e6edf3';
+      } else {
+        box.style.background = '#fff';
+        box.style.borderColor = '#ddd';
+        box.style.color = '#222';
+      }
+    }
+    styleModal(true);
+
+    function avatarColor(email) {
+      let hash = 0;
+      for (let c of email) hash = c.charCodeAt(0) + ((hash << 5) - hash);
+      const colors = ["#1f6feb","#3fb950","#f0b429","#f85149","#bc8cff","#58a6ff","#e06c75"];
+      return colors[Math.abs(hash) % colors.length];
+    }
+
+    async function doLogin() {
+      const email    = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const msg      = document.getElementById('login-msg');
+      const btn      = document.getElementById('login-submit-btn');
+      if (!email || !password) { msg.textContent = 'Fill in all fields.'; msg.className = 'acc-msg acc-error'; return; }
+      btn.disabled = true; btn.textContent = '...';
+      msg.textContent = ''; msg.className = 'acc-msg';
+      try {
+        const r = await fetch(`${BACKEND}/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await r.json();
+        if (r.ok) {
+          localStorage.setItem("dh_token", data.access_token);
+          localStorage.setItem("dh_email", email);
+          document.getElementById('login-modal').style.display = 'none';
+          loadAccount();
+        } else {
+          msg.textContent = data.detail || 'Invalid credentials.';
+          msg.className = 'acc-msg acc-error';
+        }
+      } catch { msg.textContent = 'Server unreachable.'; msg.className = 'acc-msg acc-error'; }
+      btn.disabled = false; btn.textContent = 'Log in';
+    }
+
+    async function apiPut(path, body) {
+      return fetch(`${BACKEND}${path}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` },
+        body: JSON.stringify(body)
+      });
+    }
+
+    async function loadAccount() {
+      const token = getToken();
+      if (!token) {
+        document.getElementById('not-logged').style.display = 'flex';
+        return;
+      }
+      try {
+        const r = await fetch(`${BACKEND}/user/me`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!r.ok) { document.getElementById('not-logged').style.display = 'flex'; return; }
+        const user = await r.json();
+        renderAccount(user);
+      } catch {
+        document.getElementById('not-logged').style.display = 'flex';
+      }
+    }
+
+    function renderAccount(user) {
+      document.getElementById('not-logged').style.display = 'none';
+      document.getElementById('header-user').textContent = user.email;
+      document.getElementById('btn-logout').style.display = 'inline';
+
+      const planLabels = { free: 'Free', premium: 'Premium', lifetime: 'Lifetime' };
+      const planClass  = { free: 'plan-free', premium: 'plan-premium', lifetime: 'plan-lifetime' };
+
+      const content = document.getElementById('acc-content');
+      content.innerHTML = `
+        <div class="not-logged" id="not-logged" style="display:none;"></div>
+
+        <!-- Profile header -->
+        <div class="profile-header">
+          <div class="avatar" style="background:${avatarColor(user.email)}">${user.email[0].toUpperCase()}</div>
+          <div class="profile-info">
+            <div class="profile-email">${user.email}</div>
+            <div class="profile-meta">
+              <span>${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</span>
+              <span class="plan-tag ${planClass[user.plan] || 'plan-free'}">${planLabels[user.plan] || user.plan}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Role -->
+        <div class="acc-card">
+          <div class="acc-card-title">Main role</div>
+          <div class="role-grid" id="role-grid">
+            ${ROLES.map(r => `<button class="role-btn${r === user.role ? ' active' : ''}" onclick="selectRole('${r}')">${r.charAt(0).toUpperCase() + r.slice(1)}</button>`).join('')}
+          </div>
+          <div style="margin-top:16px;display:flex;align-items:center;gap:12px;">
+            <button class="acc-btn" onclick="saveRole()" id="btn-save-role">Save role</button>
+            <span id="msg-role" class="acc-msg"></span>
+          </div>
+        </div>
+
+        <!-- Change email -->
+        <div class="acc-card">
+          <div class="acc-card-title">Change email</div>
+          <div class="acc-form">
+            <div class="acc-field">
+              <label>New email</label>
+              <input type="email" id="new-email" placeholder="${user.email}" />
+            </div>
+            <div class="acc-field">
+              <label>Confirm with your password</label>
+              <input type="password" id="email-password" placeholder="••••••••" />
+            </div>
+            <div id="msg-email" class="acc-msg"></div>
+            <button class="acc-btn" onclick="saveEmail()" id="btn-save-email">Update email</button>
+          </div>
+        </div>
+
+        <!-- Change password -->
+        <div class="acc-card">
+          <div class="acc-card-title">Change password</div>
+          <div class="acc-form">
+            <div class="acc-field">
+              <label>Current password</label>
+              <input type="password" id="cur-password" placeholder="••••••••" />
+            </div>
+            <div class="acc-field">
+              <label>New password <span style="opacity:0.6;font-weight:normal;">(8 characters min)</span></label>
+              <input type="password" id="new-password" placeholder="••••••••" />
+            </div>
+            <div id="msg-password" class="acc-msg"></div>
+            <button class="acc-btn" onclick="savePassword()" id="btn-save-password">Update password</button>
+          </div>
+        </div>
+
+        <!-- Plan -->
+        <div class="acc-card">
+          <div class="acc-card-title">Subscription</div>
+          <p style="font-size:13px;">Current plan: <strong>${planLabels[user.plan] || user.plan}</strong></p>
+          ${user.plan === 'free' ? `<p style="font-size:12px;margin-top:10px;opacity:0.5;">Premium and Lifetime plans coming soon.</p>` : ''}
+        </div>
+      `;
+
+      window._selectedRole = user.role;
+    }
+
+    function selectRole(role) {
+      window._selectedRole = role;
+      document.querySelectorAll('.role-btn').forEach(b => {
+        b.classList.toggle('active', b.textContent.toLowerCase() === role);
+      });
+    }
+
+    async function saveRole() {
+      const btn = document.getElementById('btn-save-role');
+      const msg = document.getElementById('msg-role');
+      btn.disabled = true;
+      const r = await apiPut('/user/role', { role: window._selectedRole });
+      const data = await r.json();
+      msg.textContent = r.ok ? '✓ Saved' : (data.detail || 'Error');
+      msg.className = 'acc-msg ' + (r.ok ? 'acc-success' : 'acc-error');
+      btn.disabled = false;
+      setTimeout(() => { msg.textContent = ''; }, 3000);
+    }
+
+    async function saveEmail() {
+      const btn = document.getElementById('btn-save-email');
+      const msg = document.getElementById('msg-email');
+      const newEmail = document.getElementById('new-email').value.trim();
+      const password = document.getElementById('email-password').value;
+      if (!newEmail || !password) { msg.textContent = 'Fill in all fields.'; msg.className = 'acc-msg acc-error'; return; }
+      btn.disabled = true;
+      const r = await apiPut('/user/email', { new_email: newEmail, password });
+      const data = await r.json();
+      if (r.ok) {
+        localStorage.setItem("dh_token", data.access_token);
+        localStorage.setItem("dh_email", newEmail);
+        msg.textContent = '✓ Email updated';
+        msg.className = 'acc-msg acc-success';
+        setTimeout(() => loadAccount(), 1500);
+      } else {
+        msg.textContent = data.detail || 'Error';
+        msg.className = 'acc-msg acc-error';
+      }
+      btn.disabled = false;
+    }
+
+    async function savePassword() {
+      const btn = document.getElementById('btn-save-password');
+      const msg = document.getElementById('msg-password');
+      const cur = document.getElementById('cur-password').value;
+      const nw  = document.getElementById('new-password').value;
+      if (!cur || !nw) { msg.textContent = 'Fill in all fields.'; msg.className = 'acc-msg acc-error'; return; }
+      btn.disabled = true;
+      const r = await apiPut('/user/password', { current_password: cur, new_password: nw });
+      const data = await r.json();
+      msg.textContent = r.ok ? '✓ Password updated' : (data.detail || 'Error');
+      msg.className = 'acc-msg ' + (r.ok ? 'acc-success' : 'acc-error');
+      if (r.ok) { document.getElementById('cur-password').value = ''; document.getElementById('new-password').value = ''; }
+      btn.disabled = false;
+    }
+
+    // Init
+    loadAccount();
+    if (!getToken()) document.getElementById('login-modal').style.display = 'flex';
+  </script>
+
+</body>
+</html>

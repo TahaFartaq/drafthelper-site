@@ -22,9 +22,11 @@
     .cl-entry { margin-bottom: 32px; border-left: 3px solid; padding-left: 16px; }
     body.dark  .cl-entry { border-color: #58a6ff; }
     body.light .cl-entry { border-color: #133c8a; }
+    .cl-entry.current { border-color: #3fb950 !important; }
     .cl-version { font-size: 15px; font-weight: bold; }
     body.dark  .cl-version { color: #58a6ff; }
     body.light .cl-version { color: #133c8a; }
+    .cl-entry.current .cl-version { color: #3fb950 !important; }
     .cl-date { font-size: 11px; margin-bottom: 10px; margin-top: 2px; }
     body.dark  .cl-date { color: #555; }
     body.light .cl-date { color: #999; }
@@ -40,6 +42,7 @@
     body.light .tag-fix  { background: #fde8e8; color: #c00; }
     body.light .tag-add  { background: #e8f5e8; color: #1a7a1a; }
     body.light .tag-impr { background: #e8f0ff; color: #133c8a; }
+    .current-badge { font-size: 10px; font-weight: bold; padding: 2px 8px; border-radius: 20px; background: #3fb950; color: #111; margin-left: 10px; vertical-align: middle; }
   </style>
 </head>
 <body class="dark">
@@ -55,8 +58,21 @@
       <a href="index.html" class="cl-back">← Back</a>
       <div class="cl-title">Changelog</div>
 
+      <div class="cl-entry current">
+        <div class="cl-version">v0.7 Beta <span class="current-badge">current</span></div>
+        <div class="cl-date">2026-04-01</div>
+        <ul class="cl-list">
+          <li><span class="tag tag-add">ADD</span>User authentication — login / logout directly from the overlay</li>
+          <li><span class="tag tag-add">ADD</span>Account creation via the website</li>
+          <li><span class="tag tag-add">ADD</span>Centralized backend (VPS) — tier list cached server-side, shared across all users</li>
+          <li><span class="tag tag-impr">IMPR</span>Tier list no longer fetched on every game — loaded once per patch from cache, drastically reduces cost and latency</li>
+          <li><span class="tag tag-impr">IMPR</span>Header buttons reorganized and hover effects added</li>
+          <li><span class="tag tag-add">ADD</span>Logout button (⏻) in header</li>
+        </ul>
+      </div>
+
       <div class="cl-entry">
-        <div class="cl-version">v1.5 Beta</div>
+        <div class="cl-version">v0.6 Beta</div>
         <div class="cl-date">2026-03-31</div>
         <ul class="cl-list">
           <li><span class="tag tag-add">ADD</span>Mini mode — overlay réduit à une barre minimale en haut de l'écran pendant la partie, cliquer sur ▲ pour lire le plan de jeu</li>
@@ -66,7 +82,7 @@
       </div>
 
       <div class="cl-entry">
-        <div class="cl-version">v1.4 Beta</div>
+        <div class="cl-version">v0.5 Beta</div>
         <div class="cl-date">2026-03-29</div>
         <ul class="cl-list">
           <li><span class="tag tag-impr">IMPR</span>AI now checks u.gg tier list for your role before recommending picks — each pick displays its current tier (S/A/B)</li>
@@ -81,7 +97,7 @@
       </div>
 
       <div class="cl-entry">
-        <div class="cl-version">v1.2 Beta</div>
+        <div class="cl-version">v0.4 Beta</div>
         <div class="cl-date">2026-03-29</div>
         <ul class="cl-list">
           <li><span class="tag tag-add">ADD</span>Overlay auto-hides at exactly 51s of game time — no more cursor conflict in-game</li>
@@ -93,7 +109,7 @@
       </div>
 
       <div class="cl-entry">
-        <div class="cl-version">v1.1 Beta</div>
+        <div class="cl-version">v0.3 Beta</div>
         <div class="cl-date">2026-03-29</div>
         <ul class="cl-list">
           <li><span class="tag tag-add">ADD</span>Champion pool from mastery — AI now prioritizes your top 20 played champions</li>
@@ -109,16 +125,25 @@
       </div>
 
       <div class="cl-entry">
-        <div class="cl-version">v1.0 Beta</div>
+        <div class="cl-version">v0.2 Beta</div>
         <div class="cl-date">2026-03-28</div>
+        <ul class="cl-list">
+          <li><span class="tag tag-add">ADD</span>Draft context — side (Blue/Red) and pick position now passed to AI for better strategic advice</li>
+          <li><span class="tag tag-add">ADD</span>Final game plan generated after player locks champion</li>
+          <li><span class="tag tag-add">ADD</span>12 languages support with dropdown selector</li>
+          <li><span class="tag tag-impr">IMPR</span>Draggable overlay, position saved between sessions</li>
+          <li><span class="tag tag-impr">IMPR</span>Collapsible overlay with animated resize</li>
+        </ul>
+      </div>
+
+      <div class="cl-entry">
+        <div class="cl-version">v0.1 Beta</div>
+        <div class="cl-date">2026-03-27</div>
         <ul class="cl-list">
           <li><span class="tag tag-add">ADD</span>Initial release</li>
           <li><span class="tag tag-add">ADD</span>Real-time AI overlay using LCU API + xAI (grok-4-fast)</li>
-          <li><span class="tag tag-add">ADD</span>Optimal picks, summoner spells and game plan during champion select</li>
-          <li><span class="tag tag-add">ADD</span>Final game plan generated after player locks champion</li>
-          <li><span class="tag tag-add">ADD</span>12 languages support with dropdown selector</li>
-          <li><span class="tag tag-add">ADD</span>Draggable overlay, position saved between sessions</li>
-          <li><span class="tag tag-add">ADD</span>Collapsible overlay with dark UI</li>
+          <li><span class="tag tag-add">ADD</span>Optimal picks and summoner spells during champion select</li>
+          <li><span class="tag tag-add">ADD</span>Dark UI overlay, always on top</li>
         </ul>
       </div>
 
